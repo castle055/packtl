@@ -79,9 +79,9 @@ using sliced = packtl::slice<1, 2, SomeObject::field_types>::type; // Returns a 
 After cloning this repository, or otherwise getting a copy of this directory, configure the library by running the following CMake command in this directory:
 
 ```sh
-#        Built type (Debug/Release)    Build dir  Generator
-#     /------------------------------\/--------\/-------\
-cmake -DCMAKE_BUILD_TYPE:STRING=Debug -B./build -G Ninja
+#          Built type (Debug/Release)    Build dir  Generator
+#     /--------------------------------\/--------\/-------\
+cmake -DCMAKE_BUILD_TYPE:STRING=Release -B./build -G Ninja
 ```
 
 ### Build PackTL
@@ -89,9 +89,9 @@ cmake -DCMAKE_BUILD_TYPE:STRING=Debug -B./build -G Ninja
 Once the project is configured, the library can be build with the following command:
 
 ```sh
-#      Build dir   Built type     Build target
-#     /--------\/-------------\/--------------\
-cmake -B./build --config Debug --target packtl
+#      Build dir    Built type     Build target
+#     /--------\/---------------\/--------------\
+cmake -B./build --config Release --target packtl
 ```
 
 ### Build Documentation
@@ -99,9 +99,9 @@ cmake -B./build --config Debug --target packtl
 Doxygen documentation can be build with the following command:
 
 ```sh
-#      Build dir   Built type       Build target
-#     /--------\/-------------\/-------------------\
-cmake -B./build --config Debug --target packtl_docs
+#      Build dir    Built type       Build target
+#     /--------\/---------------\/-------------------\
+cmake -B./build --config Release --target packtl_docs
 ```
 
 ### Build Unit Tests
@@ -111,17 +111,17 @@ Tests can be built either all at once or separately with the following commands:
 #### Build all tests
 
 ```sh
-#      Build dir   Built type          Build target
-#     /--------\/-------------\/-------------------------\
-cmake -B./build --config Debug --target TEST_SUITE_packtl
+#      Build dir    Built type          Build target
+#     /--------\/---------------\/-------------------------\
+cmake -B./build --config Release --target TEST_SUITE_packtl
 ```
 
 #### Build only specified test file
 
 ```sh
-#      Build dir   Built type          Build target
-#     /--------\/-------------\/------------------------\
-cmake -B./build --config Debug --target TEST_<test_name>
+#      Build dir    Built type          Build target
+#     /--------\/---------------\/------------------------\
+cmake -B./build --config Release --target TEST_<test_name>
 ```
 
 ## Usage
@@ -169,8 +169,8 @@ std::string serialize_field(const T& obj) {
 }
 
 // Serialize all fields within an object
-export template <typename T, std::size_t ...I>
-std::string serialize(const T& obj, std::index_sequence<I...>) {
+template <typename T, std::size_t ...I>
+std::string serialize_all_fields(const T& obj, std::index_sequence<I...>) {
   using fields = typename T::field_types;
 
   std::string str = "{ ";
