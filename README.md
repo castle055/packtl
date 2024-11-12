@@ -135,7 +135,7 @@ include(FetchContent)
 
 FetchContent_Declare(packtl
         GIT_REPOSITORY https://github.com/castle055/packtl.git
-        GIT_TAG main
+        GIT_TAG main # or a tag (check repository for latest version)
         FIND_PACKAGE_ARGS
 )
 FetchContent_MakeAvailable(packtl)
