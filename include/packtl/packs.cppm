@@ -232,6 +232,11 @@ export namespace packtl {
     };
 
     //! remove_first
+    template <std::size_t N>
+    struct remove_first<N> {
+      using type = pack<>;
+    };
+
     template <std::size_t N, typename First, typename... T>
       requires(N == 0)
     struct remove_first<N, First, T...> {
