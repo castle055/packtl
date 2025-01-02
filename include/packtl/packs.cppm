@@ -484,7 +484,7 @@ export namespace packtl {
   struct remove_last {
   private:
     using shuffled = typename shuffle_back<sizeof...(T) - N, T...>::type;
-    using removed  = typename remove_first<N, shuffled>::type;
+    using removed  = typename remove_first_in_pack<N, shuffled>::type;
 
   public:
     using type = removed;
