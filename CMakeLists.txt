@@ -15,8 +15,7 @@
 #                                                                              #
 #[[  CMAKE STRUCTURE:                                                        ]]#
 #      - Project setup                                                         #
-#      - Configure dependencies:                                               #
-#          - STD Module   (system)                                             #
+#      - Configure dependencies                                                #
 #      - Configure PackTL                                                      #
 #      - Configure tests                                                       #
 #      - Configure Doxygen documentation                                       #
@@ -57,7 +56,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS OFF)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmodules-ts -std=c++23")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -pthread")
 
 message("CMAKE VERSION: " ${CMAKE_VERSION})
 message("COMPILER: " ${CMAKE_CXX_COMPILER})
@@ -68,30 +67,6 @@ SET(PACKTL_INCLUDE_DIR ${PACKTL_DIR}/include)
 SET(PACKTL_SOURCE_DIR ${PACKTL_DIR}/src)
 SET(PACKTL_CMAKE_DIR ${PACKTL_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${PACKTL_CMAKE_DIR}/Modules)
-
-
-include(cmake/compiler_flags.cmake)
-compiler_flags(
-        "-stdlib=libc++"
-        "-Wall"
-        "-Wextra"
-        "-pedantic"
-        "-Werror"
-
-#        "-Wliteral-suffix"
-
-        "-Wno-unused-function"
-        "-Wno-unused-parameter"
-        "-Wno-unused-variable"
-        "-Wno-unused-value"
-        "-Wno-unused-but-set-variable"
-        "-Wno-missing-field-initializers"
-        "-Wno-error=unused"
-        "-Wno-unused-local-typedefs"
-
-        "-Wno-unknown-pragmas"
-#        "-freport-bug"
-)
 
 
 ################################################################################
@@ -117,6 +92,15 @@ target_compile_options(std
     -Wno-reserved-module-identifier
     -Wno-deprecated-declarations
 )
+
+#[[                         CONFIGURE CMAKE UTILS                            ]]#
+FetchContent_Declare(cmake_utils
+        GIT_REPOSITORY /home/castle/repos/public/cmake-utils
+        GIT_TAG main
+        FIND_PACKAGE_ARGS
+)
+FetchContent_MakeAvailable(cmake_utils)
+
 
 ################################################################################
 #[[                           CONFIGURE CYD PACKTL                           ]]#
@@ -156,18 +140,14 @@ target_link_libraries(packtl
 ################################################################################
 #[[                             CONFIGURE TESTS                              ]]#
 ################################################################################
-include(${PACKTL_CMAKE_DIR}/ctest.cmake)
-
 if (PACKTL_DEV_MODE AND PACKTL_BUILD_TESTS)
-    target_configure_test_directory(packtl ${PACKTL_TEST_DIR})
+    target_configure_test_directory(packtl ${PACKTL_TEST_DIR} TEST_TARGET_LIST)
 endif ()
 
 
 ################################################################################
 #[[                     CONFIGURE DOXYGEN DOCUMENTATION                      ]]#
 ################################################################################
-include(${PACKTL_CMAKE_DIR}/docs.cmake)
-
 if (PACKTL_DEV_MODE AND PACKTL_BUILD_DOCS)
     target_configure_doxygen(packtl
             DOXYFILE ${PACKTL_DIR}/Doxyfile
