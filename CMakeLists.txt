@@ -95,7 +95,7 @@ target_compile_options(std
 
 #[[                         CONFIGURE CMAKE UTILS                            ]]#
 FetchContent_Declare(cmake_utils
-        GIT_REPOSITORY /home/castle/repos/public/cmake-utils
+        GIT_REPOSITORY https://github.com/castle055/cmake-utils.git
         GIT_TAG main
         FIND_PACKAGE_ARGS
 )
