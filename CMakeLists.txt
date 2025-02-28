@@ -48,19 +48,17 @@ endif ()
 # Use `-DCMAKE_BUILD_TYPE=` to override this.
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
 
-cmake_minimum_required(VERSION 3.29.20240518 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.30 FATAL_ERROR)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-project(packtl LANGUAGES CXX C)
-
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "0e5b6991-d74f-4b3d-a41c-cf096e0b2508")
+set(CMAKE_CXX_MODULE_STD ON)
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED YES)
-set(CMAKE_CXX_EXTENSIONS OFF)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmodules-ts -std=c++23")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -pthread")
 
-message("CMAKE VERSION: " ${CMAKE_VERSION})
-message("COMPILER: " ${CMAKE_CXX_COMPILER})
+project(packtl LANGUAGES CXX C)
 
+#set(CMAKE_CXX_EXTENSIONS OFF)
 SET(PACKTL_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(PACKTL_TEST_DIR ${PACKTL_DIR}/test)
 SET(PACKTL_INCLUDE_DIR ${PACKTL_DIR}/include)
@@ -77,21 +75,12 @@ include(FetchContent)
 find_package(PkgConfig)
 
 #[[                           CONFIGURE STD MODULE                           ]]#
-add_library(std)
-target_sources(std
-        PUBLIC
-        FILE_SET cxx_modules
-        #        FILE_SET "${APP_NAME}_modfiles"
-        TYPE CXX_MODULES
+add_library(__unused_std_target STATIC)
+target_sources(__unused_std_target
+        PRIVATE
+        FILE_SET CXX_MODULES
         BASE_DIRS /usr/share/libc++/v1
-        FILES /usr/share/libc++/v1/std.cppm
-        /usr/share/libc++/v1/std.compat.cppm
-)
-target_compile_options(std
-    PUBLIC
-    -Wno-reserved-module-identifier
-    -Wno-deprecated-declarations
-)
+        FILES /usr/share/libc++/v1/std.cppm /usr/share/libc++/v1/std.compat.cppm)
 
 #[[                         CONFIGURE CMAKE UTILS                            ]]#
 FetchContent_Declare(cmake_utils
@@ -122,6 +111,7 @@ FILE(GLOB_RECURSE SRC_MOD_LIST CONFIGURE_DEPENDS
 
 target_include_directories(packtl PUBLIC ${PACKTL_INCLUDE_DIR})
 target_compile_features(packtl PUBLIC cxx_std_23)
+target_compile_options(packtl PUBLIC -stdlib=libc++)
 target_sources(packtl
         PUBLIC ${SRC_LIST}
         PUBLIC
@@ -130,10 +120,6 @@ target_sources(packtl
         TYPE CXX_MODULES
         BASE_DIRS ${PACKTL_SOURCE_DIR} ${PACKTL_INCLUDE_DIR}
         FILES ${SRC_MOD_LIST}
-)
-target_link_libraries(packtl
-        PUBLIC
-        std
 )
 
 
