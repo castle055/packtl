@@ -1,0 +1,36 @@
+html {
+    --top-nav-height: 150px;
+}
+
+@media screen and (min-width: 768px) {
+    #top {
+        height: var(--top-nav-height);
+    }
+
+    #nav-tree, #side-nav {
+        height: calc(100vh - var(--top-nav-height)) !important;
+    }
+
+    #side-nav {
+        top: var(--top-nav-height);
+    }
+}
+
+.arrow {
+    font-size: 100%;
+}
+
+.github-corner svg {
+    fill: var(--primary-light-color);
+    fill: #FCAE1E;
+    color: var(--page-background-color);
+    width: 72px;
+    height: 72px;
+}
+
+@media screen and (max-width: 768px) {
+    .github-corner svg {
+        width: 40px;
+        height: 40px;
+    }
+}

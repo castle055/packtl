@@ -19,6 +19,8 @@
   <a href="#license">License</a>
 </p>
 
+[TOC]
+
 ## Overview
 
 C++ allows for templates to be defined with variadic parameters, that is, the number of parameters can be unknown. These can be used for encoding arbitrary static information into types. Here is an example:
@@ -225,7 +227,7 @@ Documentation can be found [here](https://castle055.github.io/packtl/).
 
 ## License
 
-GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.md](LICENSE.md)
+GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.md](https://castle055.github.io/packtl/license.html)
 
 ---
 

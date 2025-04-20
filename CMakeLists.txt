@@ -137,7 +137,7 @@ endif ()
 ################################################################################
 if (PACKTL_DEV_MODE AND PACKTL_BUILD_DOCS)
     target_configure_doxygen(packtl
-            DOXYFILE ${PACKTL_DIR}/Doxyfile
+            DOXYFILE ${PACKTL_DIR}/docs/Doxyfile
             BASE_DIR ${PACKTL_DIR}
     )
 endif ()
