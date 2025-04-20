@@ -1,7 +1,19 @@
-// Copyright (c) 2024, Víctor Castillo Agüero.
-// SPDX-License-Identifier: GPL-3.0-or-later
-
-/*! \file  packtl.cppm
+// Copyright (c) 2024-2025, Víctor Castillo Agüero.
+// SPDX-License-Identifier: Apache-2.0
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//------------------------------------------------------------------------------
+/*! \file  packs.cppm
  *! \brief
  *!
  */
@@ -116,11 +128,9 @@ export namespace packtl {
 
     //! take_one_out_w_predicate
     template <
-      template <typename...>
-      typename Predicate,
+      template <typename...> typename Predicate,
       typename What,
-      template <typename...>
-      typename From,
+      template <typename...> typename From,
       typename A1,
       typename... Args>
       requires(Predicate<What, A1>::value)
@@ -129,11 +139,9 @@ export namespace packtl {
     };
 
     template <
-      template <typename...>
-      typename Predicate,
+      template <typename...> typename Predicate,
       typename What,
-      template <typename...>
-      typename From,
+      template <typename...> typename From,
       typename A1,
       typename... Args>
       requires(!Predicate<What, A1>::value)
@@ -144,10 +152,8 @@ export namespace packtl {
     };
 
     template <
-      template <typename...>
-      typename Predicate,
-      template <typename...>
-      typename From,
+      template <typename...> typename Predicate,
+      template <typename...> typename From,
       typename A1,
       typename... Args>
       requires(Predicate<A1>::value)
@@ -156,10 +162,8 @@ export namespace packtl {
     };
 
     template <
-      template <typename...>
-      typename Predicate,
-      template <typename...>
-      typename From,
+      template <typename...> typename Predicate,
+      template <typename...> typename From,
       typename A1,
       typename... Args>
       requires(!Predicate<A1>::value)
@@ -186,8 +190,7 @@ export namespace packtl {
     template <
       typename What,
       typename As,
-      template <typename, typename...>
-      typename From,
+      template <typename, typename...> typename From,
       typename A1,
       typename... Args>
       requires std::same_as<What, A1>
@@ -199,8 +202,7 @@ export namespace packtl {
     template <
       typename What,
       typename As,
-      template <typename, typename...>
-      typename From,
+      template <typename, typename...> typename From,
       typename A1,
       typename... Args>
       requires(!std::same_as<What, A1>)
@@ -324,8 +326,7 @@ export namespace packtl {
 
   template <
     std::size_t I,
-    template <std::size_t...>
-    typename Pack,
+    template <std::size_t...> typename Pack,
     std::size_t First,
     std::size_t... Rest>
   struct get<I, Pack<First, Rest...>> {
@@ -393,11 +394,9 @@ export namespace packtl {
 
   //! take_one_out_w_predicate
   template <
-    template <typename...>
-    typename BoolPredicate,
+    template <typename...> typename BoolPredicate,
     typename PredicateArg1,
-    template <typename...>
-    typename From,
+    template <typename...> typename From,
     typename... Args>
   struct take_one_out_w_predicate<BoolPredicate<PredicateArg1, void>, From<Args...>> {
     using type = typename impl::
@@ -405,10 +404,8 @@ export namespace packtl {
   };
 
   template <
-    template <typename...>
-    typename BoolPredicate,
-    template <typename...>
-    typename From,
+    template <typename...> typename BoolPredicate,
+    template <typename...> typename From,
     typename... Args>
   struct take_one_out_w_predicate<BoolPredicate<void>, From<Args...>> {
     using type = typename impl::take_one_out_w_predicate<BoolPredicate<void>, From<Args...>>::type;

@@ -227,7 +227,7 @@ Documentation can be found [here](https://castle055.github.io/packtl/).
 
 ## License
 
-GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.md](https://castle055.github.io/packtl/license.html)
+Apache License 2.0 &nbsp;&middot;&nbsp; [LICENSE.md](https://castle055.github.io/packtl/license.html)
 
 ---
 
